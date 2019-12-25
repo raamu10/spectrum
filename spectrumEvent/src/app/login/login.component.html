@@ -1,0 +1,16 @@
+<div>
+    <div>
+        <h1>Login</h1>
+    </div>
+    <form>
+        <div class="form-group">
+            <label for="emailId">Email Id</label>
+            <input type="email" class="form-control" id="emailId" placeholder="Enter the email" [formControl]="email">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Password</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Enter the password" [formControl]="password">
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="login()">Submit</button>
+    </form>
+</div>

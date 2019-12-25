@@ -1,0 +1,12 @@
+
+<div class="card centre-div">
+    <div class="card-header">
+        <button class="btn btn-info" (click)="isLogin=true;">Login</button>
+        <button class="btn btn-info" (click)="isLogin=false" style="margin-left: 20px;">Register</button>
+    </div>
+    <div class="card-body">
+        <app-login *ngIf="isLogin"></app-login>
+
+    <app-register *ngIf="!isLogin"></app-register>
+    </div>
+</div>
