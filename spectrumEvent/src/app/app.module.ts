@@ -18,8 +18,8 @@ const CONTAINERS = [FullLayoutComponent, SmallLayoutComponent];
 
 @NgModule({
     declarations: [
-        AppComponent,
-        ...CONTAINERS
+        AppComponent
+       // ...CONTAINERS
     ],
     imports: [
         BrowserModule,
@@ -32,7 +32,8 @@ const CONTAINERS = [FullLayoutComponent, SmallLayoutComponent];
         SharedModule,
         ToastrModule.forRoot()
     ],
-    providers: [],
+    providers: [
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,38 @@
+<div class="pad-10">
+    <h1>
+        Members
+    </h1>
+
+    <div>
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table text-center">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Company</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let member of memberList">
+                    <tr>
+                        <td>{{ member.name.first + ' ' + member.name.last }}</td>
+                        <td>{{ member.age }}</td>
+                        <td>{{ member.company }}</td>
+                        <td>{{ member.email }}</td>
+                        <td>{{ member.phone }}</td>
+                        <!-- <td>
+                        <button type="button" class="btn btn-success btn-sm mr-2" (click)="editUser(user, userModal)"> <span
+                                class=""> <i class="fas fa-user-edit "></i></span>  </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="deleteUser(user)"><span class="">
+                                <i class="fas fa-user-minus "></i></span>  </button>
+                    </td> -->
+                    </tr>
+                </ng-container>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

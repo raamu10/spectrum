@@ -1,35 +1,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FullLayoutComponent, SmallLayoutComponent } from './layout';
-
 const routes: Routes = [
 	{
 		path: '',
 		//component: LandingComponent,
-		loadChildren: './landing/landing.module#LandingModule', 
+		loadChildren: './landing/landing.module#LandingModule',
 		data: {
-		  title: 'Home'
+			title: 'Home'
 		},
-	  },
-	  {
-		path: 'fullLayout',
-		component: FullLayoutComponent,
+	},
+	{
+		path: '',
+		loadChildren: './layout/layout.module#LayoutModule',
 		data: {
-		  title: 'Full Comp'
+			title: ''
 		}
-	  },
-	  {
-		path: 'smallLayout',
-		component: SmallLayoutComponent,
-		data: {
-		  title: 'Small Comp'
-		}
-	  }
+	}
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,0 +1,9 @@
+.app-body {
+    height: 100%;
+    /* height: calc(100vh - 50px); */
+}
+
+.container-fluid {
+    height: calc(100vh - 50px) ;
+    min-height: calc(100vh - 50px);
+}

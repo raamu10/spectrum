@@ -20,12 +20,13 @@ export class LoginService {
      * Login User
      */
     loginUser(userData) {
-        this.loginDataService.loginUser(userData).subscribe( resp => {
+        this.router.navigate(['/members']);
+        /* this.loginDataService.loginUser(userData).subscribe( resp => {
             //this.router.navigate(['/users']);
             
         }, error => {
             this.toaster.error(error.error.error);
-        });
+        }); */
     }
 
 }
