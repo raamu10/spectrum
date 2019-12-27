@@ -29,7 +29,13 @@
                             <button type="button" class="btn btn-danger btn-sm" (click)="showDeleteConfirmation(member)"
                                 data-toggle="tooltip" data-placement="bottom" title="Delete Member">
                                 <span class="">
-                                <i class="fas fa-user-minus "></i></span>
+                                    <i class="fas fa-user-minus "></i></span>
+                            </button>
+                            <button type="button" class="btn btn-info btn-sm" (click)="openAddEventPopup(AddEventModal, member)"
+                                style="margin-left: 10px;"
+                                data-toggle="tooltip" data-placement="bottom" title="Add Event">
+                                <span class="">
+                                    <i class="fas fa-calendar-plus"></i></span>
                             </button>
                         </td>
                     </tr>
@@ -42,3 +48,31 @@
 </div>
 
 <app-confirmation-dialog (deleteFunc)="deleteMember();"></app-confirmation-dialog>
+
+<!-- Add to Event modal -->
+<ng-template #AddEventModal let-modal>
+    <div class="modal-header bg-dark">
+        <h4 class="modal-title text-white" id="modal-basic-title"> Add Event </h4>
+        <button class="close text-white" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <h4>Select an Event</h4>
+        <ng-multiselect-dropdown
+            [placeholder]="'Select An Event'"
+            [data]="eventList"
+            [(ngModel)]="selectedEvent"
+            [settings]="dropdownSettings"
+            (onSelect)="onItemSelect($event)">
+        </ng-multiselect-dropdown>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary m-3"
+            (click)="modal.dismiss();">Cancel</button>
+        <button type="submit" class="btn btn-primary" (click)="addSelectedEventToMember()"
+            [disabled]="selectedPackageId==''">Add</button>
+    </div>
+</ng-template>

@@ -55,3 +55,7 @@
 .cursor-pointer {
     cursor: pointer !important;
 }
+
+.btn.focus, .btn:focus, button, button:focus {
+    box-shadow: none !important;
+}

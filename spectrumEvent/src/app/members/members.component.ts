@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -8,6 +8,7 @@ import { MembersService } from './services/members.service';
 
 import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from './../shared/loader/loader.service'
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 //JQuery
 declare var $: any;
@@ -19,7 +20,12 @@ declare var $: any;
 
 export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
     public memberList = [];
+    public eventList = [];
     public selectedMember: any = {};
+    private modalRef: NgbModalRef;
+    public selectedEvent: any;
+    public dropdownSettings: IDropdownSettings = {};
+    public addedEvent = [];
 
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -40,7 +46,18 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
             destroy: true
         };
 
+        this.dropdownSettings = {
+            singleSelection: true,
+            idField: '_id',
+            textField: 'company',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
+            itemsShowLimit: 3,
+            allowSearchFilter: true
+          };
+
         this.getMemberList();
+        this.getEventList();
         
     }
 
@@ -55,8 +72,17 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
             this.loaderService.display(false);
         }, (error: any) => {
             this.loaderService.display(false);
-            this.toaster.error(error.error.error || 'Error while getting Data');
+            this.toaster.error(error.error.error || 'Error while getting Members');
         });
+    }
+
+    getEventList() {
+        this.membersService.getAllEvents().subscribe( (resp:any) => {
+            this.eventList = resp;
+
+        }, (error: any) => {
+            this.toaster.error(error.error.error || 'Error while getting Events');
+        } );
     }
 
     /**
@@ -104,6 +130,40 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.toaster.success('Member deleted successfully');
         this.rerenderTable();
+    }
+
+    openAddEventPopup(modal, selectedMember) {
+        this.selectedMember = selectedMember;
+        this.selectedEvent = '';
+        this.modalRef = this.modalService.open(modal);
+        this.modalRef.result.then((result) => {
+        }, (reason) => {
+        });
+    }
+
+    addSelectedEventToMember() {
+        console.log("selected Event:", this.selectedEvent);
+        console.log("selected member:", this.selectedMember);
+
+        if (this.selectedEvent.length != 0) {
+
+            this.addedEvent.push({
+                eventId: this.selectedEvent,
+                member: this.selectedMember
+            });
+
+
+            this.toaster.success('Event added successfully');
+
+        }
+
+        this.modalRef.dismiss();
+        
+    }
+
+    onItemSelect(item: any) {
+        console.log("-- item:" ,item);
+        this.selectedEvent = item._id;
     }
 
     

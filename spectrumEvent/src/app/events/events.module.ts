@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { EventsComponent } from './events.component';
 import { EventsRoutingModule } from './events-routing.module';
 import { EventsService } from './services/events.service';
+import { MembersService } from '../members/services/members.service'
 
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -28,7 +29,8 @@ import { FlatpickrModule } from 'angularx-flatpickr';
           })
     ],
     providers: [
-        EventsService
+        EventsService,
+        MembersService
     ]
 })
 

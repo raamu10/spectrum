@@ -16,6 +16,8 @@ import { ToastrService } from 'ngx-toastr';
 import { LoaderService } from './../shared/loader/loader.service';
 
 import { EventsService } from './services/events.service';
+import { MembersService } from '../members/services/members.service';
+import { getEventsInPeriod } from 'calendar-utils';
 
 @Component({
     'selector': 'app-events',
@@ -63,16 +65,31 @@ export class EventsComponent implements OnInit {
     activeDayIsOpen: boolean = true;
 
     constructor(private toaster: ToastrService, private eventsService: EventsService,
-        private loaderService: LoaderService, private modal: NgbModal) {
+        private loaderService: LoaderService, private modal: NgbModal,
+        private membersService: MembersService) {
 
     }
 
     ngOnInit() {
+
+        this.getEvents();
         this.events = this.eventsService.getEvents();
 
         this.events.forEach( event => {
             event.actions = this.actions;
         });
+    }
+
+    getEvents() {
+        this.loaderService.display(true);
+        this.membersService.getAllEvents().subscribe((resp: any) => {
+            console.log(resp);
+            this.loaderService.display(false);
+        }, (error: any) => {
+            this.loaderService.display(false);
+            this.toaster.error(error.error.error || 'Error while getting Events');
+        })
+
     }
 
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

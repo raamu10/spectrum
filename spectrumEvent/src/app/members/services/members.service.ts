@@ -27,7 +27,20 @@ export class MembersService {
             })
             .catch((error: any) => Observable.throw(error || JSON.parse(error._body)));
 
-    } 
+    }
+
+    /**
+     * Get all Events
+     */
+    getAllEvents() {
+        var url = this.BASE_URL + '/api/json/get/Vk7OTypQ8';
+
+        return this.http.get(url)
+            .map((res: Response) => {
+                return res;
+            })
+            .catch((error: any) => Observable.throw(error || JSON.parse(error._body)));
+    }
 
 
 
