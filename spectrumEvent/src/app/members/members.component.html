@@ -12,22 +12,26 @@
                     <th>Company</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngFor="let member of memberList">
+                <ng-container *ngFor="let member of memberList; let i = index">
                     <tr>
                         <td>{{ member.name.first + ' ' + member.name.last }}</td>
                         <td>{{ member.age }}</td>
                         <td>{{ member.company }}</td>
                         <td>{{ member.email }}</td>
                         <td>{{ member.phone }}</td>
-                        <!-- <td>
-                        <button type="button" class="btn btn-success btn-sm mr-2" (click)="editUser(user, userModal)"> <span
-                                class=""> <i class="fas fa-user-edit "></i></span>  </button>
-                        <button type="button" class="btn btn-danger btn-sm" (click)="deleteUser(user)"><span class="">
-                                <i class="fas fa-user-minus "></i></span>  </button>
-                    </td> -->
+                        <td>
+                            <!-- <button type="button" class="btn btn-success btn-sm mr-2" (click)="editUser(user, userModal)"> <span
+                                    class=""> <i class="fas fa-user-edit "></i></span>  </button> -->
+                            <button type="button" class="btn btn-danger btn-sm" (click)="showDeleteConfirmation(member)"
+                                data-toggle="tooltip" data-placement="bottom" title="Delete Member">
+                                <span class="">
+                                <i class="fas fa-user-minus "></i></span>
+                            </button>
+                        </td>
                     </tr>
                 </ng-container>
             </tbody>
@@ -36,3 +40,5 @@
 
     </div>
 </div>
+
+<app-confirmation-dialog (deleteFunc)="deleteMember();"></app-confirmation-dialog>

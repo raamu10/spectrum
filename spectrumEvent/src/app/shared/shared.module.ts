@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 
-import { ConfirmationDialogComponent } from './confirmationDialog/confirmationDialog.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
 
     declarations: [
         ConfirmationDialogComponent
     ],
-    entryComponents: [
-        ConfirmationDialogComponent
-    ],
     imports: [
+    ],
+    exports: [
+        ConfirmationDialogComponent
     ]
 
 })

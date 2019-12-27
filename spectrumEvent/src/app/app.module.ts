@@ -16,10 +16,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { FullLayoutComponent, SmallLayoutComponent } from './layout';
 const CONTAINERS = [FullLayoutComponent, SmallLayoutComponent];
 
+/* import { LoaderComponent } from './shared/loader/component/loader.component';
+import { LoaderService } from './shared/loader/loader.service'; */
+
 @NgModule({
     declarations: [
-        AppComponent
-       // ...CONTAINERS
+        AppComponent,
+       // ...CONTAINERS,
+       //LoaderComponent
     ],
     imports: [
         BrowserModule,
@@ -33,6 +37,7 @@ const CONTAINERS = [FullLayoutComponent, SmallLayoutComponent];
         ToastrModule.forRoot()
     ],
     providers: [
+        //LoaderService
     ],
     bootstrap: [AppComponent]
 })

@@ -6,8 +6,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { MembersComponent } from './members.component';
 import { MembersService } from './services/members.service';
 import { MembersRouteModule } from './members-routing.module';
-
-
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
     declarations: [
         MembersComponent,
@@ -15,7 +14,8 @@ import { MembersRouteModule } from './members-routing.module';
     imports: [
         CommonModule,
         DataTablesModule,
-        MembersRouteModule
+        MembersRouteModule,
+        SharedModule    
     ],
     providers: [
         MembersService

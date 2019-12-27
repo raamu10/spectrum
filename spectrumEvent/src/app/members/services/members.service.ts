@@ -14,6 +14,9 @@ export class MembersService {
 
     }
 
+    /**
+     * Get All Members List
+     */
     getAllMembers() {
 
         var url = this.BASE_URL + '/api/json/get/NyNrlJTX8';
