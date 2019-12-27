@@ -10,6 +10,9 @@ const route: Routes = [
         children: [{
             path: 'members',
             loadChildren: '../members/members.module#MembersModule'
+        }, {
+            path: 'events',
+            loadChildren: '../events/events.module#EventsModule'
         }],
         data: {
             title: 'Layout'
