@@ -12,6 +12,7 @@
                     <th>Company</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <th> Events </th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -23,6 +24,7 @@
                         <td>{{ member.company }}</td>
                         <td>{{ member.email }}</td>
                         <td>{{ member.phone }}</td>
+                        <td>{{ member.events ? member.events.length : 0  }}</td>
                         <td>
                             <!-- <button type="button" class="btn btn-success btn-sm mr-2" (click)="editUser(user, userModal)"> <span
                                     class=""> <i class="fas fa-user-edit "></i></span>  </button> -->
@@ -31,12 +33,19 @@
                                 <span class="">
                                     <i class="fas fa-user-minus "></i></span>
                             </button>
-                            <button type="button" class="btn btn-info btn-sm" (click)="openAddEventPopup(AddEventModal, member)"
-                                style="margin-left: 10px;"
+                            <button type="button" class="btn btn-info btn-sm"
+                                (click)="openAddEventPopup(AddEventModal, member)" style="margin-left: 10px;"
                                 data-toggle="tooltip" data-placement="bottom" title="Add Event">
                                 <span class="">
                                     <i class="fas fa-calendar-plus"></i></span>
                             </button>
+
+                            <a class="btn btn-secondary btn-sm" style="margin-left: 10px;" href="/events" role="button"
+                                title="Locate on Calendar">
+                                <span class="">
+                                    <i class="fas fa-eye"></i>
+                                </span>
+                            </a>
                         </td>
                     </tr>
                 </ng-container>
@@ -60,18 +69,13 @@
     <div class="modal-body">
 
         <h4>Select an Event</h4>
-        <ng-multiselect-dropdown
-            [placeholder]="'Select An Event'"
-            [data]="eventList"
-            [(ngModel)]="selectedEvent"
-            [settings]="dropdownSettings"
-            (onSelect)="onItemSelect($event)">
+        <ng-multiselect-dropdown [placeholder]="'Select An Event'" [data]="eventList" [(ngModel)]="selectedEvent"
+            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)">
         </ng-multiselect-dropdown>
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary m-3"
-            (click)="modal.dismiss();">Cancel</button>
+        <button type="button" class="btn btn-secondary m-3" (click)="modal.dismiss();">Cancel</button>
         <button type="submit" class="btn btn-primary" (click)="addSelectedEventToMember()"
             [disabled]="selectedPackageId==''">Add</button>
     </div>

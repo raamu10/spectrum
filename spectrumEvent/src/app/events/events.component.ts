@@ -27,7 +27,7 @@ import { getEventsInPeriod } from 'calendar-utils';
 
 export class EventsComponent implements OnInit {
 
-    @ViewChild('modalContent') modalContent: TemplateRef<any>;
+    @ViewChild('viewEventDetail') modalContent: TemplateRef<any>;
 
     view: CalendarView = CalendarView.Month;
 
@@ -35,10 +35,7 @@ export class EventsComponent implements OnInit {
 
     viewDate: Date = new Date();
 
-    modalData: {
-        action: string;
-        event: CalendarEvent;
-    };
+    modalData: CalendarEvent;
 
     actions: CalendarEventAction[] = [
         {
@@ -72,24 +69,11 @@ export class EventsComponent implements OnInit {
 
     ngOnInit() {
 
-        this.getEvents();
         this.events = this.eventsService.getEvents();
 
-        this.events.forEach( event => {
+        this.events.forEach(event => {
             event.actions = this.actions;
         });
-    }
-
-    getEvents() {
-        this.loaderService.display(true);
-        this.membersService.getAllEvents().subscribe((resp: any) => {
-            console.log(resp);
-            this.loaderService.display(false);
-        }, (error: any) => {
-            this.loaderService.display(false);
-            this.toaster.error(error.error.error || 'Error while getting Events');
-        })
-
     }
 
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -106,48 +90,12 @@ export class EventsComponent implements OnInit {
         }
     }
 
-    eventTimesChanged({
-        event,
-        newStart,
-        newEnd
-    }: CalendarEventTimesChangedEvent): void {
-        this.events = this.events.map(iEvent => {
-            if (iEvent === event) {
-                return {
-                    ...event,
-                    start: newStart,
-                    end: newEnd
-                };
-            }
-            return iEvent;
-        });
-        this.handleEvent('Dropped or resized', event);
-    }
-
+    /**
+     * Calendar Event handled
+     */
     handleEvent(action: string, event: CalendarEvent): void {
-        this.modalData = { event, action };
+        this.modalData = event;
         this.modal.open(this.modalContent, { size: 'lg' });
-    }
-
-    addEvent(): void {
-        /* this.events = [
-            ...this.events,
-            {
-                title: 'New event',
-                start: startOfDay(new Date()),
-                end: endOfDay(new Date()),
-                color: colors.red,
-                draggable: true,
-                resizable: {
-                    beforeStart: true,
-                    afterEnd: true
-                }
-            }
-        ]; */
-    }
-
-    deleteEvent(eventToDelete: CalendarEvent) {
-        this.events = this.events.filter(event => event !== eventToDelete);
     }
 
     setView(view: CalendarView) {

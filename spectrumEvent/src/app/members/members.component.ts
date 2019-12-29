@@ -25,7 +25,6 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalRef: NgbModalRef;
     public selectedEvent: any;
     public dropdownSettings: IDropdownSettings = {};
-    public addedEvent = [];
 
     @ViewChild(DataTableDirective)
     dtElement: DataTableDirective;
@@ -38,6 +37,12 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
+    /**
+     * @description
+     * set the defact table option
+     * set he default dropdown settings
+     * inti to get members and event list
+     */
     ngOnInit() {
 
         this.dtOptions = {
@@ -76,13 +81,26 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    /**
+     * Get Event list
+     */
     getEventList() {
-        this.membersService.getAllEvents().subscribe( (resp:any) => {
+
+        var addedEvent = JSON.parse(localStorage.getItem('addedEvent')) || [];
+
+        if (addedEvent.length === 0) {
+            this.eventList = this.membersService.getAllEvents();
+            localStorage.setItem('addedEvent', JSON.stringify(this.eventList));
+        } else {
+            this.eventList = addedEvent;
+        }
+
+        /* this.membersService.getAllEvents().subscribe( (resp:any) => {
             this.eventList = resp;
 
         }, (error: any) => {
             this.toaster.error(error.error.error || 'Error while getting Events');
-        } );
+        } ); */
     }
 
     /**
@@ -132,6 +150,13 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
         this.rerenderTable();
     }
 
+    /**
+     * 
+     * @param modal {Object}
+     * @param selectedMember {String}
+     * @description
+     * Open add event popup
+     */
     openAddEventPopup(modal, selectedMember) {
         this.selectedMember = selectedMember;
         this.selectedEvent = '';
@@ -141,19 +166,39 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    /**
+     * Add the Event to member
+     */
     addSelectedEventToMember() {
-        console.log("selected Event:", this.selectedEvent);
-        console.log("selected member:", this.selectedMember);
 
         if (this.selectedEvent.length != 0) {
 
-            this.addedEvent.push({
-                eventId: this.selectedEvent,
-                member: this.selectedMember
+            this.eventList.forEach( event => {
+                if (event._id === this.selectedEvent) {
+                    event.capacity = event.capacity + 1;
+                }
             });
 
+            if (this.selectedMember.events) {
+                if (this.selectedEvent.events.indexOf(this.selectedEvent) >= 0) {
+                    this.toaster.success('Member already exist in this event');
+                } else {
+                    this.selectedMember.events.push(this.selectedEvent);
+                    this.rerenderTable();
+                    this.toaster.success('Event added successfully');
+                }
 
-            this.toaster.success('Event added successfully');
+            } else {
+                this.selectedMember.events = [];
+                this.selectedMember.events.push(this.selectedEvent);
+                this.rerenderTable();
+                this.toaster.success('Event added successfully');
+            }
+            
+            //Added to local storage
+            localStorage.setItem('addedEvent', JSON.stringify(this.eventList));
+
+            
 
         }
 
@@ -161,8 +206,13 @@ export class MembersComponent implements OnInit, AfterViewInit, OnDestroy {
         
     }
 
+    /**
+     * 
+     * @param item {String}
+     * @descript
+     * Set the selected item from dropdown
+     */
     onItemSelect(item: any) {
-        console.log("-- item:" ,item);
         this.selectedEvent = item._id;
     }
 
