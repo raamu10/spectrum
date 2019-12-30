@@ -13,8 +13,8 @@ import { LandingModule } from './landing/landing.module';
 import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 
-import { FullLayoutComponent, SmallLayoutComponent } from './layout';
-const CONTAINERS = [FullLayoutComponent, SmallLayoutComponent];
+import { FullLayoutComponent } from './layout';
+const CONTAINERS = [FullLayoutComponent];
 
 /* import { LoaderComponent } from './shared/loader/component/loader.component';
 import { LoaderService } from './shared/loader/loader.service'; */
