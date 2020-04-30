@@ -31,7 +31,7 @@
     "datatables.net-dt": "^1.10.19",
     "date-fns": "^2.8.1",
     "flatpickr": "^4.6.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng-multiselect-dropdown": "0.2.5",
     "ngx-toastr": "10.0.4",
     "popper": "^1.0.1",
