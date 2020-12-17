@@ -27,7 +27,7 @@
     "angularx-flatpickr": "^6.1.1",
     "bootstrap": "4.3.1",
     "core-js": "^2.5.4",
-    "datatables.net": "^1.10.19",
+    "datatables.net": "^1.10.22",
     "datatables.net-dt": "^1.10.19",
     "date-fns": "^2.8.1",
     "flatpickr": "^4.6.3",
